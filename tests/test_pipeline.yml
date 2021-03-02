@@ -1,0 +1,30 @@
+#!/usr/bin/ansible-playbook 
+---
+- name: graylog test
+  hosts: localhost
+  vars:
+    github_repo: git@github.com:uniqconsulting-ag/ansible.graylog.git
+    role_name: uniqconsulting.graylog
+    setup_1_url: https://raw.githubusercontent.com/uniqconsulting-ag/ansible.graylog/staging/setup_1.sh
+    install_playbook: install_X_graylog.yml
+  tasks:
+  - name: prepare setup
+    shell: |
+      curl -s {{ setup_1_url }} > /tmp/setup_1.sh
+      chmod +x /tmp/setup_1.sh
+      /tmp/setup_1.sh
+  
+  - name: prepare testing branch
+    shell: |
+      cd /etc/ansible/projects/uqcSetup
+      rm -rf roles/{{ role_name }}
+      git clone --branch staging {{ github_repo }} roles/{{ role_name }}
+      cp roles/{{ role_name }}/tests/vars/99_{{ role_name }}.yml vars/
+      cp roles/{{ role_name }}/tests/{{ install_playbook }} install_1_appliance.yml
+
+  - name: run playbook
+    shell: |
+      cd /etc/ansible/projects/uqcSetup
+      ansible-playbook install_1_appliance.yml | tee -a /tmp/test_repo/tests/test_output.log
+  
+...

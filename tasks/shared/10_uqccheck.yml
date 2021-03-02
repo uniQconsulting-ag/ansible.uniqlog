@@ -1,0 +1,18 @@
+---
+  
+# Copy & Register uQcCheck
+- name: Copy uQcCheck File
+  local_action: 
+    module: copy
+    src: tests/uQcCheck_uniqlog.yml
+    dest: "{{ playbook_dir }}/uQcCheck/uQcCheck_uniqlog.yml"
+  ignore_errors: yes
+
+- name: Register uQcCheck File
+  local_action: 
+    module: lineinfile
+    line: "- import_playbook: uQcCheck/uQcCheck_uniqlog.yml"
+    path: "{{ playbook_dir }}/task_99_uQcCheck.yml"
+  ignore_errors: yes
+  
+...

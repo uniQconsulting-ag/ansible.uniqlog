@@ -4,6 +4,30 @@
 
 run_systemcheck: yes
 install_openvmtools: yes
+
+# --- FIREWALL CONFIG ---
 additional_open_ports: []
+
+# Role Specific
+
+# --- GENERAL CONFIG ---
+graylog_hostname: "servername.domain.local"
+graylog_root_email: "graylogadmin@example.com"
+graylog_admin_password: "graylog"
+graylog_install_enterprise_plugin: false
+
+# --- MAIL CONFIG ---
+graylog_transport_email_enabled: false
+graylog_transport_email_hostname: mail.example.com
+graylog_transport_email_port: 25
+graylog_transport_email_use_auth: false
+graylog_transport_email_use_tls: false
+graylog_transport_email_use_ssl: false
+graylog_transport_email_auth_username: "you@example.com"
+graylog_transport_email_auth_password:  "secret"
+graylog_transport_email_subject_prefix: "[graylog]"
+graylog_transport_email_from_email: "graylog@example.com"
+
+...
 
 ...

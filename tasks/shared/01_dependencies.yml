@@ -13,8 +13,9 @@
   - uniqconsulting.open_vm_tools
   - uniqconsulting.firewall
   - uniqconsulting.nginx
-  - uniqconsulting.mariadb
-# Include all roles like this:
+  - uniqconsulting.elasticsearch
+  - uniqconsulting.mongodb
+  - uniqconsulting.graylog
 
 - name: uniqconsulting.os_basic
   include_role:
@@ -26,6 +27,8 @@
     osbasic_package_cleanup: true
     osbasic_package_upgrade: all
     osbasic_epel: true
+    osbasic_syslog: true
+    osbasic_syslog_remote_host: '@127.0.0.1:514'
 
 - name: uniqconsulting.open_vm_tools
   include_role:
@@ -36,6 +39,40 @@
   include_role:
     name: uniqconsulting.firewall
   vars:
-    firewall_open_ports: "{{ role_ports + additional_open_ports }}"
+    firewall_open_ports: "{{ uniqlog_role_ports + additional_open_ports }}"
+    firewall_local_port_forwarding: "{{ uniqlog_firewall_port_forwards }}"
+    
+- name: uniqconsulting.elasticsearch
+  include_role:
+    name: uniqconsulting.elasticsearch
+  vars:
+    elasticsearch_cluster_name: "{{ uniqlog_cluster_name }}"
+
+- name: uniqconsulting.mongodb
+  include_role:
+    name: uniqconsulting.mongodb
+
+- name: uniqconsulting.graylog
+  include_role:
+    name: uniqconsulting.graylog
+  vars:
+    graylog_root_timezone: "Europe/Zurich"
+    graylog_allow_highlighting: true
+    graylog_dashboard_widget_default_cache_time: 60s
+    graylog_cluster_name: "{{ uniqlog_cluster_name }}"
+
+- name: uniqconsulting.nginx
+  include_role:
+    name: uniqconsulting.nginx
+  vars:
+    nginx_vhosts:
+    - default: yes
+      type: proxy
+      server_name: "{{ [uniqlog_hostname] + uniqlog_default_alias }}"
+      locations:
+      - path: /
+        pass: http://127.0.0.1:9000
+        custom_options:
+        - "proxy_set_header X-Graylog-Server-URL https://$server_name/"
 
 ...

@@ -3,18 +3,61 @@
 # a playbook or a include.
 
 # Systemcheck
-systemcheck_physical_memory: 2048 # In MB
-systemcheck_swap_memory: 1024 # In MB
-systemcheck_disk: 21474836480 # in bytes ; 20G
-systemcheck_cpus: 2
+systemcheck_physical_memory: 6144 # In MB
+systemcheck_swap_memory: 2048 # In MB
+systemcheck_disk: 42949672960 # in bytes ; 40G
+systemcheck_cpus: 4
 
-# Firewall
-role_ports:
-- port: 22
-  protocol: tcp
-- port: 80
-  protocol: tcp
-- port: 443
-  protocol: tcp
+
+# FIREWALL CONFIG
+uniqlog_role_ports:
+  - port: 514
+    protocol: udp
+  - port: "1514-1530"
+    protocol: udp
+  - port: "2016-2030"
+    protocol: udp
+  - port: 443
+    protocol: tcp
+  - port: 80
+    protocol: tcp
+
+
+# Ports
+uniqlog_firewall_port_forwards:
+  - src_port: 514
+    dest_port: 1514
+    protocol: udp
+  - src_port: 514
+    dest_port: 1514
+    protocol: tcp
+
+    
+# REPO CONFIG
+uniqlog_repo_uniqlog_rpm: https://packages.graylog2.org/repo/packages/graylog-4.0-repository_latest.rpm
+
+# GENERAL CONFIG
+uniqlog_cluster_name: "graylog"
+
+# MAIL CONFIG
+uniqlog_transport_email_web_interface_url: "https://{{ uniqlog_hostname }}"
+
+
+# Packages
+uniqlog_packages:
+- graylog-server
+- pwgen
+- cronie
+
+uniqlog_packages_java:
+- java-1.8.0-openjdk-headless
+
+uniqlog_packages_enterprise: 
+- graylog-enterprise-plugins
+
+uniqlog_default_alias:
+- graylog.*
+- syslog.*
+
 
 ...

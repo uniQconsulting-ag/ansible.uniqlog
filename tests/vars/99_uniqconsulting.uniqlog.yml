@@ -1,0 +1,31 @@
+---
+#################
+#    uniQlog
+#################
+
+# Base Settings
+graylog_hostname: "servername.domain.local"
+graylog_root_email: "graylogadmin@example.com"
+graylog_admin_password: "graylog"
+# OPTIONAL: graylog_install_enterprise_plugin: true
+
+# Mailing
+graylog_transport_email_enabled: true
+graylog_transport_email_hostname: mail.example.com
+graylog_transport_email_from_email: "graylog@example.com"
+# OPTIONAL: graylog_transport_email_subject_prefix: "[graylog]"
+# OPTIONAL: graylog_transport_email_port: 25
+# OPTIONAL: graylog_transport_email_use_auth: false
+# OPTIONAL: graylog_transport_email_use_tls: false
+# OPTIONAL: graylog_transport_email_use_ssl: false
+# OPTIONAL: graylog_transport_email_auth_username: "you@example.com"
+# OPTIONAL: graylog_transport_email_auth_password:  "secret"
+
+# snmp
+# OPTIONAL: osbasic_snmpd: false
+# OPTIONAL: osbasic_snmp_sourceip: '192.168.1.10'
+# OPTIONAL: osbasic_snmp_community_name: 'public'
+
+
+...
+

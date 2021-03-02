@@ -1,16 +1,34 @@
 ---
-# Here belong all actions like service-restart,
-# config-file loads, etc. that will be started
-# if a change on a task was made
 
-- name: restart nginx
-  service:
-    name: nginx
+- name: start graylog
+  service: 
+    name: graylog-server
+    state: started
+
+- name: stop graylog
+  service: 
+    name: graylog-server
+    state: stopped
+
+- name: restart graylog
+  service: 
+    name: graylog-server
     state: restarted
 
-- name: restart iptables
-  service:
-    name: iptables
+    
+- name: start mongod
+  service: 
+    name: mongod
+    state: started
+
+- name: stop mongod
+  service: 
+    name: mongod
+    state: stopped
+
+- name: restart mongod
+  service: 
+    name: mongod
     state: restarted
 
 ...

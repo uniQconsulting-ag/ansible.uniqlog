@@ -1,0 +1,11 @@
+#!/usr/bin/ansible-playbook
+---
+- name: role test
+  hosts: localhost
+  roles:
+    - ansible.kvm_pipeline
+  vars:
+    vm_ram: 8388608 # in KB 2G ; 8G = 8388608
+    vm_cpu: 4
+    github_repo: "git@github.com:uniqconsulting-ag/ansible.graylog.git"
+...

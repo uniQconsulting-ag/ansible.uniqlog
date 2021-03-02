@@ -1,17 +1,20 @@
 #!/usr/bin/ansible-playbook
 ---
-- name: Check ROLENAME State
+- name: Check Graylog State
   hosts: localhost
   vars:
     running_services:
-    - SERVICE1
-    - SERVICE2
+    - graylog-server
+    - elasticsearch
+    - mongod
+    - nginx
 
-    files_existing:
-    - /tmp/example
+    files_existing: []
   tasks:
-  - name: get service facts
-    service_facts:
+
+  ##################
+  #    Graylog
+  ##################
 
   - name: Check Services
     shell: "systemctl --no-pager status {{ item }} > /dev/null 2>&1" 
