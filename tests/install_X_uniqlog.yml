@@ -1,7 +1,7 @@
 #!/usr/bin/ansible-playbook 
 ---
-- name: graylog Setup
+- name: uniQlog Setup
   hosts: localhost
   roles:
-    - uniqconsulting.graylog
+    - uniqconsulting.uniqlog
 ...

@@ -68,7 +68,7 @@
     nginx_vhosts:
     - default: yes
       type: proxy
-      server_name: "{{ [uniqlog_hostname] + uniqlog_default_alias }}"
+      server_name: "{{ [graylog_hostname] + uniqlog_default_alias }}"
       locations:
       - path: /
         pass: http://127.0.0.1:9000
